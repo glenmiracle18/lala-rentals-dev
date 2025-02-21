@@ -10,6 +10,22 @@ export type formDataTypes = {
     images: string[],
   }
 
+  export type PropertyTypes = {
+    id: string
+    title: string
+    description: string
+    price: string
+    location: string
+    bathrooms: number
+    bedrooms: number
+    visitingHours: string
+    hostId: string
+    images: { url: string }[]
+    bookings: BookingTypes[]
+    createdAt: Date
+    updatedAt: Date
+  }
+
  
 
   export type BookingStatus = "PENDING" | "CONFIRMED" | "CANCELLED"

@@ -2,10 +2,9 @@
 "use server"
 
 import prisma from "@/lib/prisma";
-import { formDataTypes } from "@/types";
+import { formDataTypes, PropertyTypes } from "@/types";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { type Property } from '@prisma/client';
 
 export async function createListing(data: formDataTypes) {
   if (!data) {
@@ -99,14 +98,18 @@ export async function getAllPropeties() {
 export async function getPropertybyId(id: string) {
   try {
     const property = await prisma.property.findUnique({
-      where: {
-        id,
-      },
+      where: { id },
       include: {
         images: true,
+        bookings: {
+          include: {
+            property: true,
+            user: true
+          }
+        }
       },
     });
-    return { success: true, data: property };
+    return { success: true, data: property as unknown as PropertyTypes };
   } catch(error) {
     if (error instanceof Error) {
       console.log("Error: ", error.stack);
@@ -116,32 +119,43 @@ export async function getPropertybyId(id: string) {
 
 interface UpdateResponse {
   success: boolean;
-  data?: Property;
+  data?: PropertyTypes;
   error?: string;
 }
 
-export async function updateProperty(data: Property & { id: string }): Promise<UpdateResponse> {
+export async function updateProperty(data: PropertyTypes & { id: string }): Promise<UpdateResponse> {
   try {
     const {
       id,
+      images,
+      bookings,
       ...updateData
     } = data;
 
     const property = await prisma.property.update({
-      where: { 
-        id: id 
-      },
+      where: { id },
       data: {
         ...updateData,
-        updatedAt: new Date(), // Automatically update the timestamp
+        updatedAt: new Date(),
+        images: {
+          deleteMany: {},
+          createMany: {
+            data: images.map(image => ({ url: image.url }))
+          }
+        }
       },
+      include: {
+        images: true,
+        bookings: {
+          include: {
+            property: true,
+            user: true
+          }
+        }
+      }
     });
 
-    return { 
-      success: true, 
-      data: property 
-    };
-
+    return { success: true, data: property as unknown as PropertyTypes };
   } catch(error) {
     if (error instanceof Error) {
       console.error("Error updating property:", error.stack);
@@ -156,7 +170,7 @@ export async function updateProperty(data: Property & { id: string }): Promise<U
 
 interface DeleteResponse {
   success: boolean;
-  data?: Property;
+  data?: PropertyTypes;
   error?: string;
 }
 
@@ -191,7 +205,16 @@ export async function deleteProperty(id: string): Promise<DeleteResponse> {
     }
 
     const property = await prisma.property.delete({
-      where: { id }
+      where: { id },
+      include: {
+        images: true,
+        bookings: {
+          include: {
+            property: true,
+            user: true
+          }
+        }
+      }
     });
 
     return { 
