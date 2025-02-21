@@ -260,12 +260,12 @@ export async function getStats(): Promise<StatsData> {
 
     const totalProperties = properties.length;
     const activeBookings = properties.reduce(
-      (total, property) => total + property.bookings.length,
+      (total: number, property) => total + property.bookings.length,
       0
     );
 
     const totalRevenue = properties.reduce(
-      (total, property) => total + parseFloat(property.price),
+      (total: number, property) => total + parseFloat(property.price),
       0
     );
 
