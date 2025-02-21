@@ -181,7 +181,7 @@ const RecentBookings: React.FC = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {myBookings?.data.map((booking) => (
+          {myBookings?.data.map((booking: BookingTypes) => (
             <TableRow key={booking.id}>
               <TableCell>{booking.property.title}</TableCell>
               <TableCell>{booking.user.username}</TableCell>
