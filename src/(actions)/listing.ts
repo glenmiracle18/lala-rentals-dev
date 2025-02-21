@@ -2,7 +2,7 @@
 "use server"
 
 import prisma from "@/lib/prisma";
-import { formDataTypes, PropertyTypes } from "@/types";
+import { BookingTypes, formDataTypes, PropertyTypes } from "@/types";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
@@ -249,23 +249,33 @@ export async function getStats(): Promise<StatsData> {
       throw new Error("Unauthorized");
     }
 
+    type PropertyWithBookings = {
+      bookings: BookingTypes[];
+      price: string;
+    };
+
     const properties = await prisma.property.findMany({
       where: {
         hostId: userId
       },
       include: {
-        bookings: true
+        bookings: {
+          include: {
+            property: true,
+            user: true
+          }
+        }
       }
-    });
+    }) as unknown as PropertyWithBookings[];
 
     const totalProperties = properties.length;
     const activeBookings = properties.reduce(
-      (total: number, property) => total + property.bookings.length,
+      (total: number, property: PropertyWithBookings) => total + property.bookings.length,
       0
     );
 
     const totalRevenue = properties.reduce(
-      (total: number, property) => total + parseFloat(property.price),
+      (total: number, property: PropertyWithBookings) => total + parseFloat(property.price),
       0
     );
 
