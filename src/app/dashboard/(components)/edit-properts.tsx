@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { Property } from "@prisma/client";
 import { deleteProperty, updateProperty } from "@/(actions)/listing";
 import { toast } from "@/hooks/use-toast";
 import {
@@ -21,9 +20,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { PropertyTypes } from "@/types";
 
 interface EditPropertyModalProps {
-  property: Property;
+  property: PropertyTypes;
   onClose: () => void;
   onEditComplete: () => void;
 }
@@ -46,6 +46,8 @@ export const EditPropertyModal: React.FC<EditPropertyModalProps> = ({
     hostId: property.hostId,
     createdAt: property.createdAt,
     updatedAt: property.updatedAt,
+    images: property.images,
+    bookings: property.bookings
   });
 
   const deletePropertyMutation = useMutation({
@@ -64,7 +66,7 @@ export const EditPropertyModal: React.FC<EditPropertyModalProps> = ({
   });
 
   const updatePropertyMutation = useMutation({
-    mutationFn: (data: Property & { id: string }) => {
+    mutationFn: (data: PropertyTypes & { id: string }) => {
       return updateProperty(data);
     },
     onSuccess: () => {
