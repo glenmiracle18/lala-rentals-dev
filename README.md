@@ -9,6 +9,7 @@ npm run dev
 # or
 yarn dev
 # or
+wooo
 pnpm dev
 # or
 bun dev
