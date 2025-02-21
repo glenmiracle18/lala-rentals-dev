@@ -6,16 +6,16 @@ import { Button } from "@/components/ui/button"
 import { AlertOctagon, Pencil } from 'lucide-react'
 import { Skeleton } from "@/components/ui/skeleton"
 import { EditPropertyModal } from './edit-properts'
-import { Property } from '@prisma/client'
+import { PropertyTypes } from '@/types'
 
 interface YourPropertiesProps {
-  data: Property[];
+  data: PropertyTypes[];
   propertiesLoading: boolean;
   onEditComplete: () => void;
 }
 
 const YourProperties = ({ data, propertiesLoading, onEditComplete}: YourPropertiesProps) => {
-  const [editingProperty, setEditingProperty] = useState<Property | null>(null)
+  const [editingProperty, setEditingProperty] = useState<PropertyTypes | null>(null)
 
   if (propertiesLoading) {
     return (
