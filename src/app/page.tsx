@@ -115,13 +115,13 @@ export default function LalaRentalsHero() {
 
         <div className="space-x-4">
           <Link
-            href="/sign-up"
+            href="/sign-in"
             className="text-white border-white hover:bg-white hover:text-black"
           >
             Sign In
           </Link>
           <Link
-            href="/sign-in"
+            href="/sign-up"
             className={buttonVariants({ variant: "default" })}
           >
             Sign Up

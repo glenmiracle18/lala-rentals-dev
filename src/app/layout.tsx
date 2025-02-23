@@ -21,7 +21,7 @@ export default function RootLayout({
       >
         <ClerkProvider>
           <TanstackProvider>
-            {children}
+          {children}
             <Toaster />
           </TanstackProvider>
         </ClerkProvider>

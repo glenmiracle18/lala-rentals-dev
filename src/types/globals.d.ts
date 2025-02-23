@@ -9,4 +9,4 @@ declare global {
       role?: Roles
     }
   }
-}
+} 
