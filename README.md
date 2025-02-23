@@ -2,7 +2,9 @@
 
 A seamless property rental and booking system built with modern web technologies, featuring authentication, property listings, and a robust booking system.
 
-![LaLa Rental Platform](https://via.placeholder.com/800x400?text=LaLa+Rental+Platform)
+![image](https://github.com/user-attachments/assets/12051fe3-b8a5-4fc1-8b8b-a591898ccca8)
+
+https://www.loom.com/share/1c9285a87c9e43fcaafb8328ce76ee1c?t=24&sid=219eb2d0-45b4-40bb-9d31-482e90accd8e
 
 ## Table of Contents
 
@@ -35,15 +37,15 @@ LaLa Rental Platform is a comprehensive solution for property rentals, allowing 
 ## Features
 
 ### User Authentication
-- Google OAuth integration for secure login
+- Clerk OAuth integration for secure login
 - Role-based access control (Host/Renter)
 - Protected routes
 - Session management
+- Sever side (middleware) route protection
 
 ### Property Management
 - Create, read, update, and delete property listings
-- Upload multiple property images
-- Detailed property information (bedrooms, bathrooms, location)
+- Detailed property information (bedrooms, bathrooms, location, description)
 - Pricing and availability management
 
 ### Booking System
@@ -51,7 +53,7 @@ LaLa Rental Platform is a comprehensive solution for property rentals, allowing 
 - Double-booking prevention
 - Booking status workflows (Pending, Confirmed, Canceled)
 - Date range selection
-- Automated notifications
+- Automated notifications (future intergration)
 
 ### User Interface
 - Responsive design for all devices
@@ -64,7 +66,7 @@ LaLa Rental Platform is a comprehensive solution for property rentals, allowing 
 ### Core Technologies Overview
 
 1. **Next.js (App Router)**
-   * **Version**: 14.x
+   * **Version**: 15.01
    * **Purpose**: Full-stack React framework for the application
    * **Key Features Used**:
       * App Router for enhanced routing and layouts
@@ -86,7 +88,13 @@ LaLa Rental Platform is a comprehensive solution for property rentals, allowing 
       * Property listings
       * Bookings
       * Reviews and ratings
-
+3. **Ngrok**
+   * **Purpose**: Secure Webhook Tunneling
+   * **Key Benefits**:
+      * Tunneling for Clerk webhooks
+      * Start at build time features
+      * Realtime Processing and updates
+    
 3. **Server Actions**
    * **Purpose**: Handle server-side mutations and data processing
    * **Implementation Areas**:
@@ -111,6 +119,7 @@ LaLa Rental Platform is a comprehensive solution for property rentals, allowing 
    * **Key Features Used**:
       * Automatic background refetching
       * Cache management
+      * refetch calls
       * Error handling
       * Loading states
 
@@ -122,6 +131,7 @@ LaLa Rental Platform is a comprehensive solution for property rentals, allowing 
       * Multiple image upload support
    * **Features**:
       * Direct-to-cloud uploads
+      * React Dropzone multi upload
       * Image optimization
       * Progress tracking
       * File type validation
@@ -175,11 +185,12 @@ LaLa Rental Platform is a comprehensive solution for property rentals, allowing 
 #### Backend
 - **Node.js**: JavaScript runtime
 - **Prisma**: ORM for database operations
-- **Next.js API Routes**: RESTful API endpoints
+- **Next Server (onlly): server calls
 
 #### Infrastructure
 - **Docker**: Containerization
 - **Google Cloud Run**: Serverless deployment
+- **Github Action: CI/CD workflows
 - **Google Cloud Build**: CI/CD integration
 - **Google Cloud Storage**: Image storage
 
@@ -209,7 +220,7 @@ This separation of concerns ensures maintainability and scalability of the codeb
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/lala-rental-platform.git
+git clone https://github.com/glenmiracle18/lala-rental-platform.git
 cd lala-rental-platform
 
 # Install dependencies
@@ -228,22 +239,17 @@ npm run dev
 Create a `.env` file in the root directory:
 
 ```
-# Database
-DATABASE_URL="postgresql://username:password@localhost:5432/lala_db"
+DATABASE_URL=
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
 
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key
-CLERK_SECRET_KEY=your_secret_key
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
-# Upload Images
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+SIGNING_SECRET=
 
-# General
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+UPLOADTHING_TOKEN='
+UPLOADTHING_SECRET=
 ```
 
 ## Development
@@ -308,26 +314,6 @@ model Booking {
   // ...other fields
 }
 ```
-
-### API Endpoints
-
-The API follows RESTful principles with these main endpoints:
-
-- **Auth**
-  - Managed through Clerk
-
-- **Properties**
-  - `GET /api/properties` - List all properties
-  - `GET /api/properties/:id` - Get property details
-  - `POST /api/properties` - Create a property (Host only)
-  - `PUT /api/properties/:id` - Update a property (Host only)
-  - `DELETE /api/properties/:id` - Delete a property (Host only)
-
-- **Bookings**
-  - `GET /api/bookings` - Get user's bookings
-  - `POST /api/bookings` - Create a booking
-  - `PUT /api/bookings/:id` - Update booking status
-  - `DELETE /api/bookings/:id` - Cancel a booking
 
 ## Deployment
 
@@ -490,4 +476,4 @@ steps:
 
 ---
 
-© 2025 LaLa Rental Platform. All Rights Reserved.
+© 2025 LaLa Rental Platform by Glen Miracle. All Rights Reserved.
