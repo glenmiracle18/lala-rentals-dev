@@ -4,6 +4,7 @@ A seamless property rental and booking system built with modern web technologies
 
 ![image](https://github.com/user-attachments/assets/12051fe3-b8a5-4fc1-8b8b-a591898ccca8)
 
+https://www.loom.com/share/1c9285a87c9e43fcaafb8328ce76ee1c?t=24&sid=219eb2d0-45b4-40bb-9d31-482e90accd8e
 
 ## Table of Contents
 
